@@ -25,10 +25,10 @@ func set_plugin(v: EditorPlugin) -> void:
 		_translate_node(get_parent())
 
 
-func tr(message: String) -> String:
+func tr(message: StringName) -> StringName:
 	if _translation:
 		var translated := _translation.get_message(message)
-		if not translated.empty():
+		if translated != "":
 			return translated
 	return message
 

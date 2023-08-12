@@ -78,18 +78,18 @@ func _notification(what: int):
 	
 	match what:
 		NOTIFICATION_ENTER_TREE, NOTIFICATION_THEME_CHANGED:
-			find_node("ScrollContainer").add_stylebox_override("bg", get_stylebox("bg", "Tree"))
+			find_node("ScrollContainer").add_theme_stylebox_override("bg", get_theme_stylebox("bg", "Tree"))
 			
 			if extra_button:
 				var popup = extra_button.get_popup()
-				popup.set_item_icon(popup.get_item_index(ExtraOption.COPY), get_icon("ActionCopy", "EditorIcons"))
-				popup.set_item_icon(popup.get_item_index(ExtraOption.PASTE), get_icon("ActionPaste", "EditorIcons"))
+				popup.set_item_icon(popup.get_item_index(ExtraOption.COPY), get_theme_icon("ActionCopy", "EditorIcons"))
+				popup.set_item_icon(popup.get_item_index(ExtraOption.PASTE), get_theme_icon("ActionPaste", "EditorIcons"))
 
 
 func edit(path: String) -> void:
 	if _modified:
 		_popup_confirm(
-			translator.tr("There are unsaved changes.\nOpen '%s' anyway?") % path,
+			str(translator.tr("There are unsaved changes.\nOpen '%s' anyway?")) % path,
 			"_set_editing_file", [path]
 		)
 	else:
@@ -176,7 +176,7 @@ func _set_editing_file(path: String) -> int: # Error
 	else:
 		var err := _config.load(path)
 		if err != OK:
-			_popup_message(translator.tr("'%s' is not a valid SFXR file.") % path)
+			_popup_message(str(translator.tr("'%s' is not a valid SFXR file.")) % path)
 			return err
 		audio_player.stream = load(path)
 	
@@ -189,7 +189,7 @@ func _set_modified(value: bool) -> void:
 	_modified = value
 	
 	var has_file := not _path.empty()
-	var base = _path if has_file else translator.tr("Unsaved sound")
+	var base = _path if has_file else str(translator.tr("Unsaved sound"))
 	if _modified:
 		base += "(*)"
 	filename_label.text = base

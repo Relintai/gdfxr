@@ -36,8 +36,8 @@ func _init() -> void:
 	_line_edit = LineEdit.new()
 	_line_edit.set_as_toplevel(true)
 	_line_edit.visible = false
-	_line_edit.add_stylebox_override("normal", style)
-	_line_edit.add_stylebox_override("focus", StyleBoxEmpty.new())
+	_line_edit.add_theme_stylebox_override("normal", style)
+	_line_edit.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	
 	var _ret: int
 	_ret = _line_edit.connect("focus_exited", self, "_on_line_edit_focus_exited")
@@ -48,8 +48,8 @@ func _init() -> void:
 
 
 func _draw() -> void:
-	var font := get_font("font", "LineEdit")
-	var color := get_color("highlighted_font_color" if _mouse_hovering else "font_color", "Editor")
+	var font := get_theme_font("font", "LineEdit")
+	var color := get_theme_color("highlighted_font_color" if _mouse_hovering else "font_color", "Editor")
 	var number_string := "%.3f" % value
 	var number_size := font.get_string_size(number_string)
 	var pos := Vector2(
@@ -70,7 +70,7 @@ func _draw() -> void:
 
 func _get_minimum_size() -> Vector2:
 	var ms := _stylebox_normal.get_minimum_size()
-	ms.y += get_font("font", "LineEdit").get_height()
+	ms.y += get_theme_font("font", "LineEdit").get_height()
 	return ms
 
 
@@ -121,13 +121,13 @@ func set_value(v: float) -> void:
 
 
 func _update_stylebox() -> void:
-	_stylebox_normal = get_stylebox("normal", "LineEdit")
+	_stylebox_normal = get_theme_stylebox("normal", "LineEdit")
 	_stylebox_hover = StyleBoxFlat.new()
-	_stylebox_hover.bg_color = get_color("highlight_color", "Editor")
+	_stylebox_hover.bg_color = get_theme_color("highlight_color", "Editor")
 	_stylebox_editing = StyleBoxFlat.new()
-	_stylebox_editing.bg_color = get_color("dark_color_2", "Editor")
+	_stylebox_editing.bg_color = get_theme_color("dark_color_2", "Editor")
 	_stylebox_value = StyleBoxFlat.new()
-	_stylebox_value.bg_color = get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+	_stylebox_value.bg_color = get_theme_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
 
 
 func _drag_prepare(mouse: InputEventMouse) -> void:
